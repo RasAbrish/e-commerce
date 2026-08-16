@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Amazon Ember', Arial, sans-serif;
+  background-color: #e3e6e6;
+  color: #0f1111;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Focus ring */
+input:focus, textarea:focus, select:focus {
+  border-color: #e47911;
+  box-shadow: 0 0 0 3px rgba(228, 121, 17, 0.3);
+  outline: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f0f2f2; }
+::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }
+
+/* Star rating fill */
+.star-filled { color: #e47911; fill: #e47911; }
+.star-empty { color: #d5d9d9; fill: #d5d9d9; }

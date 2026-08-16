@@ -1,0 +1,56 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Typecheck Monorepo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Typecheck Shared Package
+        run: cd packages/shared && npx tsc --noEmit
+
+      - name: Typecheck API
+        run: cd apps/api && npx tsc --noEmit
+
+      - name: Typecheck Web App
+        run: cd apps/web && npx tsc --noEmit
+
+  test-api:
+    name: Run API Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: cd apps/api && npx prisma generate
+
+      - name: Run Tests
+        run: cd apps/api && npm test -- --passWithNoTests

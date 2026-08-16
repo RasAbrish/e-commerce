@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  phone           String?   @unique
+  passwordHash    String    @map("password_hash")
+  firstName       String    @map("first_name")
+  lastName        String    @map("last_name")
+  role            String    @default("CUSTOMER")
+  avatarUrl       String?   @map("avatar_url")
+  isEmailVerified Boolean   @default(false) @map("is_email_verified")
+  isActive        Boolean   @default(true) @map("is_active")
+  lastLoginAt     DateTime? @map("last_login_at")
+  refreshToken    String?   @map("refresh_token")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  description      String
+  shortDescription String?  @map("short_description")
+  price            Float
+  compareAtPrice   Float?   @map("compare_at_price")
+  currency         String   @default("ETB")
+  type             String
+  status           String   @default("DRAFT")
+  isFeatured       Boolean  @default(false) @map("is_featured")
+
+  averageRating Float @default(0) @map("average_rating")
+  totalReviews  Int   @default(0) @map("total_reviews")
+  totalSales    Int   @default(0) @map("total_sales")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}

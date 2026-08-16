@@ -1,0 +1,7 @@
+.agents
+.gemini
+node_modules
+dist
+.next
+.env
+.env.local
