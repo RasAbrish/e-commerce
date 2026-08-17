@@ -3,5 +3,9 @@
 node_modules
 dist
 .next
+.turbo
+*.log
+uploads
 .env
 .env.local
+.env.production

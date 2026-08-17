@@ -13,9 +13,24 @@ async function bootstrap() {
   // Global response interceptor — wraps responses in { success, data }
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  // CORS
+  // CORS Configuration for Production (Render + Vercel)
+  const allowedOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+    : ['http://localhost:3000', 'http://localhost:3001'];
+
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        allowedOrigins.includes('*') ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app')
+      ) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -33,7 +48,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  console.log(`🚀 Bright Ideas API running on: http://localhost:${port}`);
+  console.log(`🚀 Bright Ideas API running on port: ${port}`);
   console.log(`📚 Swagger docs available at: http://localhost:${port}/api/docs`);
 }
 bootstrap();

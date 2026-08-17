@@ -2,9 +2,10 @@
   "name": "@bright-ideas/api",
   "version": "1.0.0",
   "scripts": {
-    "build": "nest build",
+    "build": "npx prisma generate && nest build",
     "dev": "nest start --watch",
     "start": "nest start",
+    "start:prod": "node dist/src/main.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "ts-node prisma/seed.ts",

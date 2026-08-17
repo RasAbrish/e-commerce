@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: bright-ideas-api
+    runtime: node
+    rootDir: apps/api
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: node dist/src/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CHAPA_SECRET_KEY
+        sync: false
+      - key: CORS_ORIGIN
+        value: "*"
