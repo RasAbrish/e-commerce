@@ -1,5 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build -w @bright-ideas/shared && npm run build",
   "outputDirectory": ".next"
 }
