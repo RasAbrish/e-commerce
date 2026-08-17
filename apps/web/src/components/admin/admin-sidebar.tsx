@@ -30,7 +30,7 @@ export function AdminSidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-[#131921] text-white min-h-screen p-4 flex flex-col justify-between shrink-0">
+    <aside className="w-64 bg-[#131921] text-white min-h-full p-4 flex flex-col justify-between shrink-0">
       <div className="space-y-6">
         {/* Brand */}
         <div className="px-3 py-2 border-b border-gray-800">

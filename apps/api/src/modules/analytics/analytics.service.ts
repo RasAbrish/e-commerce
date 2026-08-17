@@ -132,6 +132,30 @@ export class AnalyticsService {
     }));
   }
 
+  getSystemSettings() {
+    return {
+      storeName: 'Bright Ideas Digital Store',
+      currency: 'ETB',
+      paymentProvider: 'Chapa',
+      fileDelivery: process.env.STORAGE_TYPE || 'LOCAL',
+      apiEnvironment: process.env.NODE_ENV || 'development',
+      corsOrigin: process.env.CORS_ORIGIN || '*',
+      databaseConfigured: Boolean(process.env.DATABASE_URL),
+      chapaConfigured: Boolean(process.env.CHAPA_SECRET_KEY),
+      appUrl: process.env.APP_URL || null,
+    };
+  }
+
+  updateSystemSettings(data: any) {
+    return {
+      ...this.getSystemSettings(),
+      storeName: data?.storeName || 'Bright Ideas Digital Store',
+      currency: data?.currency || 'ETB',
+      paymentProvider: data?.paymentProvider || 'Chapa',
+      message: 'Settings validated. Environment-backed values must be changed in the hosting dashboard.',
+    };
+  }
+
   // --- Admin Order Management ---
 
   async getAllOrders(page = 1, limit = 20, status?: string, search?: string) {
@@ -195,4 +219,3 @@ export class AnalyticsService {
     });
   }
 }
-

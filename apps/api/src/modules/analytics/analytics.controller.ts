@@ -35,6 +35,18 @@ export class AnalyticsController {
     return { success: true, data: products };
   }
 
+  @Get('settings')
+  async getSettings() {
+    const settings = this.analyticsService.getSystemSettings();
+    return { success: true, data: settings };
+  }
+
+  @Patch('settings')
+  async updateSettings(@Body() body: any) {
+    const settings = this.analyticsService.updateSystemSettings(body);
+    return { success: true, data: settings };
+  }
+
   @Get('orders')
   async getAllOrders(
     @Query('page') page?: string,
@@ -60,4 +72,3 @@ export class AnalyticsController {
     return { success: true, data: order };
   }
 }
-
