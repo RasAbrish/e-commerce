@@ -30,21 +30,10 @@ export default function LoginPage() {
 
     if (res.success && res.data) {
       setAuth(res.data.user, res.data.accessToken, res.data.refreshToken);
-      router.push('/dashboard');
+      const role = res.data.user?.role;
+      router.push(role === 'ADMIN' || role === 'SUPER_ADMIN' ? '/admin' : '/dashboard');
     } else {
-      if (email.includes('admin')) {
-        setAuth(
-          { id: 'admin1', email, firstName: 'Admin', lastName: 'User', role: 'ADMIN' },
-          'mock-access-token', 'mock-refresh-token'
-        );
-        router.push('/admin');
-      } else {
-        setAuth(
-          { id: 'cust1', email, firstName: 'Abebe', lastName: 'Bikila', role: 'CUSTOMER' },
-          'mock-access-token', 'mock-refresh-token'
-        );
-        router.push('/dashboard');
-      }
+      setError(res.error || 'Invalid email or password');
     }
   };
 
